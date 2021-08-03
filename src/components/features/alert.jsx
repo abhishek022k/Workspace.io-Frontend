@@ -1,6 +1,5 @@
 import React from "react";
 function Alert(props) {
-  console.log("rendercount");
   var alertType = "";
   var alertMessage = "";
   var errorMessage = false;

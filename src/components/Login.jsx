@@ -1,8 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import "./../App.css";
 import Alert from "./features/alert";
 import axios from "axios";
-function Login() {
+function Login(props) {
+  useEffect(() => {
+    if (!props.auth) {
+      const token = Cookies.get("WorkspaceAuth");
+      if (token) {
+        axios
+          .get("http://localhost:8000/auth/user", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((res) => {
+            if (res && res.status === 200) {
+              props.history.push("/dashboard");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } else {
+      props.history.push("/dashboard");
+    }
+  }, []);
+
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
@@ -12,9 +35,11 @@ function Login() {
   });
   const [alert, setAlert] = useState({ message: "", success: 2 });
   const [hideAlert, setHideAlert] = useState(false);
+
   function handleAlertClose() {
     setHideAlert(true);
   }
+
   function validateFields() {
     let valE, valP;
     valE = valP = false;
@@ -23,7 +48,6 @@ function Login() {
       email: "form-control grayBorderless",
       password: "form-control grayBorderless",
     };
-
     if (password) {
       valP = true;
     } else {
@@ -45,38 +69,35 @@ function Login() {
     }
     setErrors(errors);
     setBox(errorbox);
-
     if (valE && valP) {
       return true;
     }
-
     return false;
   }
-  async function handleSubmit(event) {
+
+  function handleSubmit(event) {
     event.preventDefault();
     if (validateFields()) {
       const body = {
         email: email,
         password: password,
       };
-      try {
-        let response = await axios.post(
-          "http://localhost:8000/auth/login",
-          body
-        );
-        console.log(response);
-        if (
-          response &&
-          response.status === 200 &&
-          response.statusText === "OK"
-        ) {
-          setAlert({ message: "Logged in successfully!", success: 1 });
-        }
-      } catch (error) {
-        setAlert({ message: error.response.data.message, success: 0 });
-      }
-    } else {
-      setAlert({ message: "", success: 2 });
+      axios
+        .post("http://localhost:8000/auth/login", body)
+        .then((res) => {
+          if (res && res.status === 200) {
+            setAlert({ message: "Logged in successfully!", success: 1 });
+            let expire = new Date(
+              new Date().getTime() + res.data.expires_in * 1000
+            );
+            props.handleLogin(res.data.access_token, expire);
+            props.history.push("/dashboard");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setAlert({ message: err.response.data.message, success: 0 });
+        });
     }
     setHideAlert(false);
   }
