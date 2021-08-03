@@ -2,6 +2,7 @@ import React from "react";
 import "./../App.css";
 import Alert from "./features/alert";
 import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +10,7 @@ class Signup extends React.Component {
       name: "",
       email: "",
       password: "",
-      errors: { name: "", email: "", password: "" },
+      errors: { name: "", email: "", password: "", token: "" },
       errorbox: {
         name: "form-control grayBorderless",
         email: "form-control grayBorderless",
@@ -18,7 +19,9 @@ class Signup extends React.Component {
       hideAlert: false,
       alert: { message: "", success: 2 },
       loading: false,
+      token: "",
     };
+    this.reCaptcha = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateFields = this.validateFields.bind(this);
   }
@@ -27,14 +30,19 @@ class Signup extends React.Component {
   };
 
   validateFields() {
-    let valN, valE, valP;
-    valE = valN = valP = false;
-    let errors = { name: "", email: "", password: "" };
+    let valN, valE, valP, valT;
+    valE = valN = valP = valT = false;
+    let errors = { name: "", email: "", password: "", token: "" };
     let errorbox = {
       name: "form-control grayBorderless",
       email: "form-control grayBorderless",
       password: "form-control grayBorderless",
     };
+    if (!this.state.token) {
+      errors.token = "Please attempt the google reCaptha";
+    } else {
+      valT = true;
+    }
     if (this.state.name.trim()) {
       let regex = /^[a-zA-Z_ ]+$/;
       if (regex.test(this.state.name) === false) {
@@ -75,7 +83,7 @@ class Signup extends React.Component {
     }
     this.setState({ errors: errors, errorbox: errorbox });
 
-    if (valE && valN && valP) {
+    if (valE && valN && valP && valT) {
       return true;
     }
 
@@ -86,6 +94,7 @@ class Signup extends React.Component {
     event.preventDefault();
     if (this.validateFields()) {
       const body = {
+        token: this.state.token,
         name: this.state.name,
         email: this.state.email,
         password: this.state.password,
@@ -108,6 +117,9 @@ class Signup extends React.Component {
         this.setState({
           alert: { message: error.response.data.message, success: 0 },
         });
+      } finally{
+        this.reCaptcha.current.reset();
+        this.setState({ token: "" });
       }
     } else {
       this.setState({ alert: { message: "", success: 2 } });
@@ -179,10 +191,23 @@ class Signup extends React.Component {
                 </div>
                 <div className="invalidField">{this.state.errors.password}</div>
               </div>
+              <div className="mb-2">
+                <ReCAPTCHA
+                  ref={this.reCaptcha}
+                  sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
+                  onChange={(token) => {
+                    this.setState({ token: token });
+                  }}
+                  onExpired={() => {
+                    this.setState({ token: "" });
+                  }}
+                />
+                <div className="invalidField">{this.state.errors.token}</div>
+              </div>
               <button
                 type="submit"
                 className="btn btn-primary font-weight-bold my-3 formButton"
-                disabled={this.state.loading ? "true" : ""}
+                disabled={this.state.loading ? true : ""}
               >
                 Register
               </button>
