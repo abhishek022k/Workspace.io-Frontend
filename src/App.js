@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "./components/Nav";
+import Nav from "./components/features/Nav";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import PasswordReset from "./components/PasswordReset";

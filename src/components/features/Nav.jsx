@@ -1,6 +1,6 @@
 import React from "react";
-import "./../App.css";
-import favicon from "./images/favicon-310.png";
+import "./../../App.css";
+import favicon from "./../images/favicon-310.png";
 function Nav(props) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

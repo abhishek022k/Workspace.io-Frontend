@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./features/sidebar";
+import Homepage from "./Homepage";
+import Tasks from "./Tasks/Tasks";
+import Users from "./Users/Users";
 import Cookies from "js-cookie";
 import axios from "axios";
 import "./../App.css";
@@ -64,9 +67,10 @@ function Dashboard(props) {
     <div className="d-flex">
       <Sidebar logo={logo} name={user.name} fontSize={nameFont}/>
       <Switch>
-        {/* <Route exact path={path} component={}/> */}
+        <Route exact path={path} component={Homepage}/>
+        <Route path={`${path}/users`} component={Users}/>
+        <Route path={`${path}/tasks`} component={Tasks}/>
       </Switch>
-      <h1>Dashboard</h1>
     </div>
   );
 }
