@@ -40,6 +40,10 @@ class App extends React.Component {
         })
         .catch((error) => {
           console.log(error);
+          Cookies.remove("WorkspaceAuth");
+          this.setState({ auth: false }, () => {
+            this.setState({ authChecked: true });
+          });
         });
     } else {
       this.setState({ authChecked: true });
@@ -50,8 +54,23 @@ class App extends React.Component {
     this.setState({ auth: true });
   };
   handleLogout = () => {
+    const token = Cookies.get("WorkspaceAuth");
+    if(token){
+      axios
+      .post("http://localhost:8000/auth/logout", {},{
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        if (res && res.status === 200) {
+          this.setState({ auth: false });
+        }
+      })
+      .catch((error) => {
+        console.log(error.response);
+        console.log(error);
+      });
+    }    
     Cookies.remove("WorkspaceAuth");
-    this.setState({auth : false});
   }
   RequireAuth = ({ children }) => {
     if (!this.state.auth) {
@@ -63,12 +82,16 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Nav handleLogout={this.handleLogout} auth={this.state.auth}/>
+          <Nav handleLogout={this.handleLogout} auth={this.state.auth} />
           <Switch>
             <Route
               path="/login"
               render={(routeProps) => (
-                <Login {...routeProps} handleLogin={this.handleLogin} auth={this.state.auth}/>
+                <Login
+                  {...routeProps}
+                  handleLogin={this.handleLogin}
+                  auth={this.state.auth}
+                />
               )}
             />
             <Route path="/signup" component={Signup} />
@@ -84,10 +107,7 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/"
-                  render={() =>
-                      <Redirect to="/dashboard" />
-                    
-                  }
+                  render={() => <Redirect to="/dashboard" />}
                 />
               </this.RequireAuth>
             ) : null}

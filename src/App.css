@@ -1,8 +1,10 @@
+/* CSS for app background and height */
 .App {
   min-height: 100%;
   background-color: #fbfbfb;
 }
 
+/* For login and signup pages */
 .auth-card {
   width: 40%;
   top: 80px;
@@ -45,6 +47,7 @@ label {
   margin-top: 5px;
 }
 
+/* Styling for alerts used in loginflow */
 .alertBox {
   font-size: 14px;
 }
@@ -63,6 +66,7 @@ label {
   box-shadow: none;
 }
 
+/* Styling for dashboard sidebar */
 #sidebar {
   width: 225px;
   height: 92vh;
