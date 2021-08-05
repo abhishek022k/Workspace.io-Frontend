@@ -1,21 +1,73 @@
-import React from "react";
-// import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Sidebar from "./features/sidebar";
+import Cookies from "js-cookie";
+import axios from "axios";
 import "./../App.css";
+import { Route, Switch, useRouteMatch } from "react-router";
 function Dashboard(props) {
-  console.log("HERE32");
-  console.log(props.user);
+  const [user, setUser] = useState({});
+  const [logo, setLogo] = useState("");
+  const [nameFont, setFont] = useState("");
+  const {path} = useRouteMatch();
+  function getFirstLetters(str) {
+    let logo = "";
+    let nameArr = str.match(/\w+/g);
+    if (nameArr.length === 1) {
+      return logo.concat(nameArr[0].substring(0, 2)).toUpperCase();
+    }
+    return logo.concat(nameArr[0].charAt(0), nameArr[1].charAt(0));
+  }
+  useEffect(() => {
+    if (
+      props.user &&
+      Object.keys(props.user).length === 0 &&
+      props.user.constructor === Object
+    ) {
+      const token = Cookies.get("WorkspaceAuth");
+      if (token) {
+        axios
+          .get("http://localhost:8000/auth/user", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((res) => {
+            if (res && res.status === 200) {
+              setUser(res.data.user);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            props.history.push("/");
+          });
+      } else {
+        props.history.push("/");
+      }
+    } else {
+      setUser(props.user);
+    }
+  }, []);
+  useEffect(() => {
+    console.log(user);
+    if (
+      !(user && Object.keys(user).length === 0 && user.constructor === Object)
+    ) {
+      setLogo(getFirstLetters(user.name));
+      if(user.name.length <= 30){
+        setFont("bigFont");
+      }else if(user.name.length > 50){
+        setFont("smallFont");
+      }else{
+        setFont("");
+      }
+    }
+  }, [user]);
   return (
-      <div><h1>Dashboard</h1></div>
-  //   <div style={{top:'0%'}}>
-  //       <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-  //   <div class="position-sticky">
-  //     <div class="list-group list-group-flush mx-3 mt-4">
-        
-  //     </div>
-  //   </div>
-  // </nav>
-
-  //   </div>
+    <div className="d-flex">
+      <Sidebar logo={logo} name={user.name} fontSize={nameFont}/>
+      <Switch>
+        {/* <Route exact path={path} component={}/> */}
+      </Switch>
+      <h1>Dashboard</h1>
+    </div>
   );
 }
 
