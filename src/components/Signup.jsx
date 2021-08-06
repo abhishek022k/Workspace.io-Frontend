@@ -117,9 +117,9 @@ class Signup extends React.Component {
         this.setState({
           alert: { message: error.response.data.message, success: 0 },
         });
-      } finally{
+      } finally {
         this.reCaptcha.current.reset();
-        this.setState({ token: "", email:"", name: "", password: "" });
+        this.setState({ token: "", email: "", name: "", password: "" });
       }
     } else {
       this.setState({ alert: { message: "", success: 2 } });

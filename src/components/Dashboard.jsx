@@ -11,7 +11,7 @@ function Dashboard(props) {
   const [user, setUser] = useState({});
   const [logo, setLogo] = useState("");
   const [nameFont, setFont] = useState("");
-  const {path} = useRouteMatch();
+  const { path } = useRouteMatch();
   function getFirstLetters(str) {
     let logo = "";
     let nameArr = str.match(/\w+/g);
@@ -53,22 +53,22 @@ function Dashboard(props) {
       !(user && Object.keys(user).length === 0 && user.constructor === Object)
     ) {
       setLogo(getFirstLetters(user.name));
-      if(user.name.length <= 30){
+      if (user.name.length <= 30) {
         setFont("bigFont");
-      }else if(user.name.length > 50){
+      } else if (user.name.length > 50) {
         setFont("smallFont");
-      }else{
+      } else {
         setFont("");
       }
     }
   }, [user]);
   return (
     <div className="d-flex">
-      <Sidebar logo={logo} name={user.name} fontSize={nameFont}/>
+      <Sidebar logo={logo} name={user.name} fontSize={nameFont} />
       <Switch>
-        <Route exact path={path} component={Homepage}/>
-        <Route path={`${path}/users`} component={Users}/>
-        <Route path={`${path}/tasks`} component={Tasks}/>
+        <Route exact path={path} component={Homepage} />
+        <Route path={`${path}/users`} component={Users} />
+        <Route path={`${path}/tasks`} component={Tasks} />
       </Switch>
     </div>
   );

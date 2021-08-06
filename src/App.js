@@ -55,23 +55,27 @@ class App extends React.Component {
   };
   handleLogout = () => {
     const token = Cookies.get("WorkspaceAuth");
-    if(token){
+    if (token) {
       axios
-      .post("http://localhost:8000/auth/logout", {},{
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        if (res && res.status === 200) {
-          this.setState({ auth: false });
-        }
-      })
-      .catch((error) => {
-        console.log(error.response);
-        console.log(error);
-      });
-    }    
+        .post(
+          "http://localhost:8000/auth/logout",
+          {},
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((res) => {
+          if (res && res.status === 200) {
+            this.setState({ auth: false });
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+          console.log(error);
+        });
+    }
     Cookies.remove("WorkspaceAuth");
-  }
+  };
   RequireAuth = ({ children }) => {
     if (!this.state.auth) {
       return <Redirect to="/login" />;

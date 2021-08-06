@@ -7,9 +7,9 @@ function PasswordReset() {
   const [email, setEmail] = useState("");
   const [errorbox, setBox] = useState("form-control grayBorderless");
   const [error, setError] = useState("");
-  const [alert, setAlert] = useState({message : "", success : 2})
+  const [alert, setAlert] = useState({ message: "", success: 2 });
   const [hideAlert, setHideAlert] = useState(false);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function handleAlertClose() {
     setHideAlert(true);
@@ -45,7 +45,7 @@ function PasswordReset() {
     event.preventDefault();
     if (validateFields()) {
       const body = {
-        email: email
+        email: email,
       };
       try {
         let response = await axios.post(
@@ -53,10 +53,7 @@ function PasswordReset() {
           body
         );
         console.log(response);
-        if (
-          response &&
-          response.status === 201
-        ) {
+        if (response && response.status === 201) {
           setAlert({ message: response.data.message, success: 1 });
         }
       } catch (error) {
@@ -86,7 +83,9 @@ function PasswordReset() {
                 className={errorbox}
                 id="inputEmail"
                 placeholder="email@vmock.com"
-                onChange={({target})=>{setEmail(target.value)}}
+                onChange={({ target }) => {
+                  setEmail(target.value);
+                }}
               />
               <div className="invalidField">{error}</div>
             </div>

@@ -1,8 +1,8 @@
 import React from "react";
 import "./../../App.css";
-import { NavLink, useRouteMatch} from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 function Sidebar(props) {
-  const {path} = useRouteMatch();
+  const { path } = useRouteMatch();
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light d-flex flex-column"
@@ -21,13 +21,32 @@ function Sidebar(props) {
         <div className="navtabs">
           <ul className="navbar-nav mt-3 me-auto mb-lg-0 w-100 d-flex flex-column">
             <li className="nav-item">
-            <NavLink exact={true} to={`${path}`} className="Nav-link" activeClassName="Nav-active">Dashboard</NavLink>
+              <NavLink
+                exact={true}
+                to={`${path}`}
+                className="Nav-link"
+                activeClassName="Nav-active"
+              >
+                Dashboard
+              </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to={`${path}/tasks`} className="Nav-link"  activeClassName="Nav-active">Tasks</NavLink>
+              <NavLink
+                to={`${path}/tasks`}
+                className="Nav-link"
+                activeClassName="Nav-active"
+              >
+                Tasks
+              </NavLink>
             </li>
             <li className="nav-item">
-            <NavLink to={`${path}/users`}className="Nav-link"  activeClassName="Nav-active">Users</NavLink>
+              <NavLink
+                to={`${path}/users`}
+                className="Nav-link"
+                activeClassName="Nav-active"
+              >
+                Users
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -37,4 +56,3 @@ function Sidebar(props) {
 }
 
 export default Sidebar;
-

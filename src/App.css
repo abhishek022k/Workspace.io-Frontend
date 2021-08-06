@@ -136,19 +136,19 @@ label {
   height: 75.5%;
   position: relative;
 }
-.Nav-link{
+.Nav-link {
   display: block;
   padding: 0.5rem 2rem;
   color: #333333;
 }
-.Nav-link:hover{
-  color : unset;
+.Nav-link:hover {
+  color: unset;
   text-decoration: none;
   background-color: #e7e7e7;
 }
-.Nav-link:visited{
-  color:unset;
+.Nav-link:visited {
+  color: unset;
 }
-.Nav-active{
-  background-color: #FBFBFB;
+.Nav-active {
+  background-color: #fbfbfb;
 }
