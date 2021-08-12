@@ -54,6 +54,7 @@ class App extends React.Component {
     this.setState({ auth: true });
   };
   handleLogout = () => {
+    this.setState({ auth: false });
     const token = Cookies.get("WorkspaceAuth");
     if (token) {
       axios
@@ -74,6 +75,7 @@ class App extends React.Component {
           console.log(error);
         });
     }
+    localStorage.removeItem("Filters");
     Cookies.remove("WorkspaceAuth");
   };
   RequireAuth = ({ children }) => {

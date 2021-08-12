@@ -7,7 +7,7 @@ function Sidebar(props) {
     <nav
       className="navbar navbar-expand-lg navbar-light d-flex flex-column"
       id="sidebar"
-    >
+    > 
       <div
         className="container-fluid d-flex flex-column"
         style={{ height: "100%", padding: "0" }}
