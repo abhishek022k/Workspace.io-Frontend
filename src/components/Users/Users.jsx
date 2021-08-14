@@ -225,7 +225,7 @@ function Users(props) {
           </div>
         </Route>
         <Route path={`${path}/:userId`}>
-          <UserProfile load={reloadList}/>
+          <UserProfile load={reloadList} admin={props.user.admin_access}/>
         </Route>
       </Switch>
     </div>

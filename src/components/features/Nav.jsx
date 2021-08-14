@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./../../App.css";
 import favicon from "./../images/favicon-310.png";
 function Nav(props) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid  justify-content-between">
-        <a className="navbar-brand font-weight-bold" href="/">
+        <Link className="navbar-brand font-weight-bold" to="/">
           <img
             src={favicon}
             alt=""
@@ -14,7 +15,7 @@ function Nav(props) {
             className="d-inline-block align-text-top"
           />
           &nbsp;Workspace.io
-        </a>
+        </Link>
         {props.auth ? (
           <div>
             <button

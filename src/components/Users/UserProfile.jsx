@@ -87,48 +87,50 @@ function UserProfile(props) {
             {` / ${user.name}`}
           </p>
           <div className="p-2 detail-item2">
-            <div className="user-detail-logo">{getFirstLetters(user.name)}</div>
-            {!user.deleted_at || user.deleted_at === null ? (
-              <button
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                className="btn btn-outline-warning detail-subitem-button"
-                onClick={() => {
-                  let obj = {
-                    message:
-                      "Are you sure you want to delete user with email " +
-                      user.email +
-                      " ?",
-                    id: user.id,
-                    type: "Delete",
-                  };
-                  setConfirm(obj);
-                }}
-              >
-                DELETE
-              </button>
-            ) : (
-              <button
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-                className="btn btn-outline-success detail-subitem-button"
-                onClick={() => {
-                  let obj = {
-                    message:
-                      "Are you sure you want to restore user with email " +
-                      user.email +
-                      " ?",
-                    id: user.id,
-                    type: "Restore",
-                  };
-                  setConfirm(obj);
-                }}
-              >
-                RESTORE
-              </button>
-            )}
+            <div className="user-detail-logo">{getFirstLetters(user.name)}</div>{
+                props.admin === 1 ? (!user.deleted_at || user.deleted_at === null) ? (
+                    <button
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      className="btn btn-outline-warning detail-subitem-button"
+                      onClick={() => {
+                        let obj = {
+                          message:
+                            "Are you sure you want to delete user with email " +
+                            user.email +
+                            " ?",
+                          id: user.id,
+                          type: "Delete",
+                        };
+                        setConfirm(obj);
+                      }}
+                    >
+                      DELETE
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      className="btn btn-outline-success detail-subitem-button"
+                      onClick={() => {
+                        let obj = {
+                          message:
+                            "Are you sure you want to restore user with email " +
+                            user.email +
+                            " ?",
+                          id: user.id,
+                          type: "Restore",
+                        };
+                        setConfirm(obj);
+                      }}
+                    >
+                      RESTORE
+                    </button>
+                  ) : null
+            }
+            
             <div className="detail-subitem2 ml-4">
               <h4 style={{ fontWeight: "bold" }}>{user.name}</h4>
               <p>{user.email}</p>
