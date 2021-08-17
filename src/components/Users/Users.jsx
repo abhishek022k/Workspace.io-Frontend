@@ -7,10 +7,14 @@ import ConfirmModal from "../features/ConfirmModal";
 import { retrieveCookie } from "../helpers/helpers";
 import UserProfile from "./UserProfile";
 import { Route, Switch, useRouteMatch } from "react-router";
+import { useDispatch } from "react-redux";
+import { fetchList } from "../../state/reducers/taskReducer";
+import { fetchUserList } from "../../state/reducers/taskFilterReducer";
 function Users(props) {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState({ search: "", page: 1, showDel: "" });
+  const dispatch = useDispatch();
   const [pageProps, setPageProps] = useState({
     current: 0,
     per_page: 8,
@@ -47,6 +51,8 @@ function Users(props) {
             console.log(res.data.message);
             let obj = { ...filters, page: 1 };
             setFilters(obj);
+            dispatch(fetchList());
+            dispatch(fetchUserList());
           }
         })
         .catch((error) => {
@@ -66,6 +72,8 @@ function Users(props) {
             console.log(res.data.message);
             let obj = { ...filters, page: 1 };
             setFilters(obj);
+            dispatch(fetchList());
+            dispatch(fetchUserList());
           }
         })
         .catch((error) => {

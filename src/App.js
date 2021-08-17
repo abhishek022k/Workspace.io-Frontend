@@ -6,6 +6,8 @@ import PasswordReset from "./components/PasswordReset";
 import Dashboard from "./components/Dashboard";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { setAuth } from "./state/actions/actions";
+import { connect } from "react-redux";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -15,8 +17,8 @@ import {
 } from "react-router-dom";
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       authChecked: false,
       auth: false,
@@ -36,6 +38,9 @@ class App extends React.Component {
             this.setState({ user: res.data.user }, () => {
               this.setState({ authChecked: true });
             });
+            if(!(this.props.auth && Object.keys(this.props.auth).length === 0)){
+              this.props.setAuth(res.data.user);
+            }
           }
         })
         .catch((error) => {
@@ -49,9 +54,10 @@ class App extends React.Component {
       this.setState({ authChecked: true });
     }
   }
-  handleLogin = (token, expire) => {
+  handleLogin = (token, expire,user) => {
     Cookies.set("WorkspaceAuth", token, { expires: expire });
     this.setState({ auth: true });
+    this.setState({ user: user });
   };
   handleLogout = () => {
     this.setState({ auth: false });
@@ -123,5 +129,13 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+const mapDispatchToProps = () => ({
+  setAuth
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps()
+)(App);

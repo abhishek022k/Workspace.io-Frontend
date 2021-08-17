@@ -136,35 +136,35 @@ label {
   height: 75.5%;
   position: relative;
 }
-.Nav-link{
+.Nav-link {
   display: block;
   padding: 0.5rem 2rem;
   color: #333333;
 }
-.Nav-link:hover{
-  color : unset;
+.Nav-link:hover {
+  color: unset;
   text-decoration: none;
   background-color: #e7e7e7;
 }
-.Nav-link:visited{
-  color:unset;
+.Nav-link:visited {
+  color: unset;
 }
-.Nav-active{
-  background-color: #FBFBFB;
+.Nav-active {
+  background-color: #fbfbfb;
 }
 
 /* Styling for users page */
-.searchBox{
+.searchBox {
   border: 0;
-  background-color: #f7f7f7;  
+  background-color: #f7f7f7;
   width: 27%;
 }
 .searchBox::-webkit-input-placeholder {
   font-weight: normal;
-  color : #b8b7b7 !important;
+  color: #b8b7b7 !important;
 }
 
-.user-list-logo{
+.user-list-logo {
   display: inline-block;
   font-size: 100%;
   font-weight: bold;
@@ -178,27 +178,27 @@ label {
   vertical-align: middle;
   color: #1d1d1d;
 }
-.pagination-text{
+.pagination-text {
   position: relative;
   display: block;
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
   color: #007bff;
   background-color: #fff;
 }
-.pagination-input{
+.pagination-input {
   width: 40px;
   background-color: rgb(243, 247, 253);
 }
-.pagination-pos{
-  position:absolute;
-  bottom:2%;
-  left:50%;
+.pagination-pos {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
   transform: translate(-50%, 0);
 }
 /* Styling for user details page */
-.user-detail-logo{
+.user-detail-logo {
   display: inline-block;
   font-size: 250%;
   font-weight: bold;
@@ -214,36 +214,139 @@ label {
   align-self: center;
   justify-self: center;
 }
-.detail-container-grid{
-  display:grid;
+.detail-container-grid {
+  display: grid;
   height: 100%;
   width: 100%;
   grid-template-rows: 40px 240px 1fr;
-  grid-template-columns: 1fr 1fr ;
+  grid-template-columns: 1fr 1fr;
 }
-.detail-item1{
-  grid-column : 1 / span 3;
+.detail-item1 {
+  grid-column: 1 / span 3;
   grid-row: 1 / 2;
 }
-.detail-item2{
+.detail-item2 {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   display: grid;
   grid-template-rows: 64% 1fr;
   grid-template-columns: 24% 1fr;
 }
-.detail-subitem-button{
+.detail-subitem-button {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   align-self: center;
   justify-self: center;
 }
-.detail-subitem2{
+.detail-subitem2 {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   justify-self: start;
-  align-self:center;
+  align-self: center;
 }
-.detail-subitem2 p{
-  color:#8f8f8f;
+.detail-subitem2 p {
+  color: #8f8f8f;
+}
+
+/* Styling for Task Navbar */
+
+.Nav-Task-link {
+  margin: 0 3px 0 3px;
+  display: block;
+  padding: 0.5rem 2rem;
+  color: #333333;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 90%,
+    lightblue 98%
+  );
+}
+.Nav-Task-link:hover {
+  color: unset;
+  text-decoration: none;
+  background-color: #e7e7e7;
+}
+.Nav-Task-link:visited {
+  color: unset;
+}
+.Nav-Task-active {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 90%,
+    rgb(0, 132, 255) 98%
+  );
+}
+
+/* Styling for task list page */
+.tasklist-container-grid{
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-rows: 80px 40px 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.tasklist-item1{
+  grid-column: 1 / 5;
+  grid-row: 1 / 2;
+}
+.tasklist-item2{
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
+.tasklist-item3{
+  grid-column: 2/3;
+  grid-row: 3/4;
+}
+.tasklist-item4{
+  grid-column: 3/4;
+  grid-row: 3/4;
+}
+.tasklist-item2 , .tasklist-item3, .tasklist-item4{
+  border-right: 2px solid #e7e7e7;
+}
+.tasklist-item5{
+  grid-column: 4/5;
+  grid-row: 3/4;
+}
+.task-header{
+  color: #9b9b9b;
+  letter-spacing: 1.5px;
+}
+.selectLabel{
+  margin: 0;
+  font-style: italic;
+  color: #767676;
+}
+.taskItemSize{
+  height: fit-content;
+  display: inline-block;
+  word-break: break-word;
+  word-wrap: break-word;
+  overflow: auto;
+}
+.list-area{
+  height: 450px;
+  overflow: auto;
+  margin-top: 4px;
+  border-top: 1px solid lightgrey;
+}
+.caret-off::before {
+  display: none;
+}
+.caret-off::after {
+  display: none;
+}
+
+.daily-list-area{
+  height: 180px;
+  overflow: auto;
+}
+.homepage-grid-1{
+  grid-column: 1/2;
+  grid-row : 2/3;
+  padding : 0 20px 0 0 ;
+}
+.titleLink, .titleLink:hover, .titleLink:focus, .titleLink:active{
+  text-decoration: none;
+  color: inherit;
 }

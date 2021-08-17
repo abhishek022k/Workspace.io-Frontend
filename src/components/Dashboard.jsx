@@ -8,11 +8,18 @@ import axios from "axios";
 import "./../App.css";
 import { Route, Switch, useRouteMatch } from "react-router";
 import { getFirstLetters } from "./helpers/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "../state/actions/actions";
+import Pusher from "pusher-js";
+import { useAlert } from 'react-alert'
 function Dashboard(props) {
   const [user, setUser] = useState({});
   const [logo, setLogo] = useState("");
   const [nameFont, setFont] = useState("");
   const { path } = useRouteMatch();
+  const { auth } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const reactAlert = useAlert();
   useEffect(() => {
     if (
       props.user &&
@@ -27,6 +34,9 @@ function Dashboard(props) {
         .then((res) => {
           if (res && res.status === 200) {
             setUser(res.data.user);
+            if (auth && Object.keys(auth).length === 0) {
+              dispatch(setAuth(res.data.user));
+            }
           }
         })
         .catch((error) => {
@@ -35,7 +45,17 @@ function Dashboard(props) {
         });
     } else {
       setUser(props.user);
+      dispatch(setAuth(props.user))
     }
+    console.log(process.env);
+    const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+      cluster: "ap2",
+      forceTLS: false,
+    });
+    var channel = pusher.subscribe("my-channel"+props.user.id);
+    channel.bind("create-event", function (data) {
+      reactAlert.show(data.message);
+    });
   }, []);
   useEffect(() => {
     if (

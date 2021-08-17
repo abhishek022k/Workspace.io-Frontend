@@ -5,6 +5,9 @@ import { useParams } from "react-router";
 import { retrieveCookie, getFirstLetters } from "../helpers/helpers";
 import { Link } from "react-router-dom";
 import ConfirmModal from "../features/ConfirmModal";
+import { useDispatch } from "react-redux";
+import { fetchList } from "../../state/reducers/taskReducer";
+import { fetchUserList } from "../../state/reducers/taskFilterReducer";
 
 function UserProfile(props) {
   var { userId } = useParams();
@@ -12,6 +15,7 @@ function UserProfile(props) {
   const [loading, setLoading] = useState(true);
   const [confirm, setConfirm] = useState({ message: "", type: "", id: "" });
   const [reload, setReload] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     const token = retrieveCookie();
     axios
@@ -46,6 +50,8 @@ function UserProfile(props) {
           if (res && res.status === 200) {
             console.log(res.data.message);
             props.load();
+            dispatch(fetchList());
+            dispatch(fetchUserList());
           }
         })
         .catch((error) => {
@@ -64,6 +70,8 @@ function UserProfile(props) {
           if (res && res.status === 200) {
             console.log(res.data.message);
             props.load();
+            dispatch(fetchList());
+            dispatch(fetchUserList());
           }
         })
         .catch((error) => {

@@ -16,3 +16,19 @@ export function getFirstLetters(str) {
   }
   return logo.concat(nameArr[0].charAt(0), nameArr[1].charAt(0)).toUpperCase();
 }
+export function getFormattedDate(data){
+  const date = new Date(data);
+  const formattedDate = date.toLocaleDateString("en-GB", {day: "numeric",month: "short",year: "numeric"});
+  return formattedDate;
+}
+export function getFormattedTime(data){
+  const date = new Date(data);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}

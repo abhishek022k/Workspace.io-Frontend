@@ -90,7 +90,7 @@ function Login(props) {
             let expire = new Date(
               new Date().getTime() + res.data.expires_in * 1000
             );
-            props.handleLogin(res.data.access_token, expire);
+            props.handleLogin(res.data.access_token, expire, res.data.user);
             props.history.push("/dashboard");
           }
         })
