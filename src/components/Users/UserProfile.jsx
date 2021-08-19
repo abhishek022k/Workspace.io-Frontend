@@ -144,19 +144,6 @@ function UserProfile(props) {
               <p>{user.email}</p>
             </div>
           </div>
-          {/* <div className="ml-3 mr-4 card border-0" style={{ height: "100%" }}>
-            <div className="container">
-              <div className="d-flex justify-content-between mt-4 mb-3">
-                <p
-                  style={{ color: "#9e9e9e" }}
-                  className="mx-4 align-self-center justify-item-center m-0"
-                >
-                  Total:
-                </p>
-              </div>
-              <hr style={{ border: "#f7f7f7 0.5px solid" }} />
-            </div>
-          </div> */}
         </div>
       ) : null}
     </div>

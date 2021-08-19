@@ -27,7 +27,7 @@ function dailyTaskItem(props) {
       </div>
       <div
         style={{ width: "67%" }}
-        className="d-flex flex-column justify-content-between"
+        className="d-flex flex-column"
       >
         <Link
           style={{ maxHeight: "50px", fontWeight: "bold",cursor:"pointer" }}
